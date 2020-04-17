@@ -14,6 +14,7 @@ app.use(cors({
 }))
 
 router(app)
+app.use('/app', express.static('public'));
 
 app.set('port',process.env.PORT || 3000)
 

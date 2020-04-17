@@ -6,5 +6,5 @@ function addFilm(film){
 }
 
 module.exports = {
-    add: addFilm
+    addFilm: addFilm
 }
