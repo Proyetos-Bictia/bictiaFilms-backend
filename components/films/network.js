@@ -16,6 +16,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+router.get('/', (req,res) => {
+    controller.listFilm().then(film => {
+        response.success(req,res,film, 201)
+    }).catch(e => {
+        response.error(req,res,e,403)
+    })
+})
+
 router.post('/',secure('createMovie'), upload.single('image'), (req,res) => {
     controller.addFilm(req.body, req.file).then(film => {
         response.success(req,res,film, 201)

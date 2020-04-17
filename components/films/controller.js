@@ -18,6 +18,11 @@ async function addFilm(film, file) {
     return store.addFilm(mensajeCompleto)
 }
 
+async function listFilm(){
+    return store.listFilm()
+}
+
 module.exports = {
-    addFilm
+    addFilm,
+    listFilm
 }
