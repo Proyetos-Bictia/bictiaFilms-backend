@@ -24,12 +24,16 @@ router.get('/', (req,res) => {
     })
 })
 
-router.post('/',secure('createMovie'), upload.single('image'), (req,res) => {
+router.post('/', upload.single('image'), (req,res) => {
+    console.log(req.file);
+    
     controller.addFilm(req.body, req.file).then(film => {
         response.success(req,res,film, 201)
     }).catch(e => {
         response.error(req,res,e,403)
     })
 })
+
+
 
 module.exports = router

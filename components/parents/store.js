@@ -37,8 +37,23 @@ function searchById(query){
     })
 }
 
+function emailExist(email){
+    return new Promise((resolve, reject) => {
+        Model.findOne({email: email}).exec( (err,data) => {
+            if(err){
+                reject('Ocurrio un error')
+            }
+            if(!data){
+                reject('No existe ese correo')
+            }
+            resolve(data)
+        })
+    })
+}
+
 module.exports = {
     add: addParent,
     search,
-    searchId: searchById
+    searchId: searchById,
+    emailValidation: emailExist
 }

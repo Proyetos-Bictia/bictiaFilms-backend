@@ -31,7 +31,6 @@ async function login(data){
     }
 
     const adminFinal = {
-        ...auth,
         token: authExport.sign(auth)
     }
 
