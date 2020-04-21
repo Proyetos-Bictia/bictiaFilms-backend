@@ -1,6 +1,7 @@
 const express = require('express')
 const response = require('../../network/response')
 const controller = require('./controller')
+const secure = require('./secure')
 
 const router = express.Router()
 
@@ -24,6 +25,14 @@ router.post('/', (req,res) => {
 router.post('/login', (req,res) => {
     controller.login(req.body).then(data => {
         response.success(req,res,data,201)
+    }).catch(e => {
+        response.error(req,res,e,500)
+    })
+})
+
+router.post('/createchild', secure('createChild'),(req,res) => {
+    controller.addChild(req.body).then(data => {
+        response.success(req,res,data,200)
     }).catch(e => {
         response.error(req,res,e,500)
     })

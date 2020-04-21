@@ -4,25 +4,25 @@ const authExport = require('../../auth/index')
 const bcrypt = require('bcrypt')
 
 
-async function getParent(query){
-    if(query === ''){
+async function getParent(query) {
+    if (query === '') {
         return store.search()
     }
-    if(mongoose.Types.ObjectId.isValid(query)){
+    if (mongoose.Types.ObjectId.isValid(query)) {
         return store.searchId(query)
     }
     return 'Id no es valido'
 }
 
-async function addParent(parent){
-    if(!parent.name || !parent.lastName || !parent.email || !parent.password || !parent.phone || !parent.birthDate || !parent.creditCard){
+async function addParent(parent) {
+    if (!parent.name || !parent.lastName || !parent.email || !parent.password || !parent.phone || !parent.birthDate || !parent.creditCard) {
         return Promise.reject('Formulario incompleto')
     }
     const fullMessage = {
         name: parent.name,
         lastName: parent.lastName,
         email: parent.email,
-        password : await bcrypt.hash(parent.password,5),
+        password: await bcrypt.hash(parent.password, 5),
         phone: parent.phone,
         birthDate: parent.birthDate,
         creditCard: parent.creditCard,
@@ -32,8 +32,8 @@ async function addParent(parent){
     return store.add(fullMessage)
 }
 
-async function loginParent(data){
-    if(!data.email || !data.password){
+async function loginParent(data) {
+    if (!data.email || !data.password) {
         return Promise.reject('Faltan parametros')
     }
 
@@ -58,8 +58,31 @@ async function loginParent(data){
     })
 }
 
+async function addChild(child) {
+    if (!child.name || !child.parent) {
+        return Promise.reject('Formulario incompleto')
+    }
+    if (mongoose.Types.ObjectId.isValid(child.parent) === false) {
+        return Promise.reject('Id no valido')
+    }
+
+    await store.validation(child.parent)
+
+    const fullMessage = {
+        name: child.name,
+        parent: child.parent,
+        favFilms: []
+    }
+    const childCreate = await store.addChild(fullMessage)
+    
+    await store.pushChild(fullMessage.parent, childCreate._id)
+
+    return childCreate
+}
+
 module.exports = {
     add: addParent,
     get: getParent,
-    login: loginParent
+    login: loginParent,
+    addChild
 }

@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./network/routes');
 const db = require('./db')
+const errors = require('./network/errors')
 
 db('mongodb+srv://camiloAdmin:madrid321431462@cluster0-rszgv.mongodb.net/test?retryWrites=true&w=majority')
 
@@ -14,6 +15,9 @@ app.use(cors({
 }))
 
 router(app)
+
+app.use(errors)
+
 app.use('/app', express.static('public'));
 
 app.set('port',process.env.PORT || 3000)
