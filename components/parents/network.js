@@ -30,8 +30,28 @@ router.post('/login', (req,res) => {
     })
 })
 
+router.patch('/:id', (req,res) => {
+    controller.edit(req.params.id, req.body).then(data => {
+        response.success(req,res,data,200)
+    }).catch(e => {
+        response.error(req,res,e,500)
+    })
+})
+
+
+/**
+ * Funciones para agragar y eliminar cuentas de hijos
+ */
 router.post('/createchild', secure('createChild'),(req,res) => {
     controller.addChild(req.body).then(data => {
+        response.success(req,res,data,200)
+    }).catch(e => {
+        response.error(req,res,e,500)
+    })
+})
+
+router.delete('/deleteChild',secure('createChild') ,(req,res) => {
+    controller.deleteChild(req.body.child, req.body.parent).then(data => {
         response.success(req,res,data,200)
     }).catch(e => {
         response.error(req,res,e,500)

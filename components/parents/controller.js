@@ -26,8 +26,7 @@ async function addParent(parent) {
         phone: parent.phone,
         birthDate: parent.birthDate,
         creditCard: parent.creditCard,
-        rol: "ROL_PARENT",
-        childs: []
+        rol: "ROL_PARENT"
     }
     return store.add(fullMessage)
 }
@@ -58,6 +57,33 @@ async function loginParent(data) {
     })
 }
 
+async function editParent(idParent, data){
+    if(!idParent || !data.name || !data.lastName || !data.email || !data.phone || !data.birthDate || !data.creditCard){
+        return Promise.reject('Falta id o data de la edición')
+    }
+    if(!mongoose.Types.ObjectId.isValid(idParent)){
+        return Promise.reject('No es un id valido para la db')
+    }
+
+    const fullMessage = {
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        birthDate: data.birthDate,
+        creditCard: data.creditCard
+    }
+
+    return store.editParent(idParent, fullMessage)
+}
+
+// CONTROLADOR DEL HIJO
+
+/**
+ * 
+ * @param {*} child es la data del hijo que se recibo por body 
+ */
+
 async function addChild(child) {
     if (!child.name || !child.parent) {
         return Promise.reject('Formulario incompleto')
@@ -74,15 +100,34 @@ async function addChild(child) {
         favFilms: []
     }
     const childCreate = await store.addChild(fullMessage)
-    
-    await store.pushChild(fullMessage.parent, childCreate._id)
 
     return childCreate
+}
+
+/**
+ * 
+ * @param {*} idChild se recibe por body 
+ * @param {*} idParent se recibe por body
+ */
+
+async function deleteChild(idChild, idParent){
+    if(!idChild || !idParent){
+        return Promise.reject('Id hijo, Id padre son obligatorios')
+    }
+    if(!mongoose.Types.ObjectId.isValid(idChild) || !mongoose.Types.ObjectId.isValid(idParent)){
+        return Promise.reject('Este no es un id valido para la db')
+    }
+
+    const child = await store.getChildren(idParent, idChild)
+
+    return child
 }
 
 module.exports = {
     add: addParent,
     get: getParent,
     login: loginParent,
-    addChild
+    addChild,
+    deleteChild,
+    edit: editParent
 }
