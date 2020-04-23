@@ -5,9 +5,13 @@ function addFilm(film){
     return myFilm.save()
 }
 
-function listFilm(){
+function listFilm(id){
+    let filter = {}
+    if(id !== null){
+        filter = {_id: id}
+    }
     return new Promise((resolve,reject) => {
-        Model.find().exec((err, data) => {
+        Model.find(filter).exec((err, data) => {
             if(err){
                 reject('Ocurrio un error en la busqueda')
             }
