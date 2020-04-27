@@ -77,6 +77,17 @@ async function editParent(idParent, data){
     return store.editParent(idParent, fullMessage)
 }
 
+async function deleteParent(id){
+    if(!id){
+        return Promise.reject('id es obligatorio')
+    }
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return Promise.reject('no es un id valido para mongo')
+    }
+    console.log('retornando id' +id)
+    return store.delete(id)
+}
+
 // CONTROLADOR DEL HIJO
 
 /**
@@ -129,5 +140,6 @@ module.exports = {
     login: loginParent,
     addChild,
     deleteChild,
-    edit: editParent
+    edit: editParent,
+    deleteParent 
 }

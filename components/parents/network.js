@@ -38,6 +38,14 @@ router.patch('/:id', (req,res) => {
     })
 })
 
+router.delete('/:id', secure('deleteParent'),(req,res) => {
+    controller.deleteParent(req.params.id).then(data => {
+        response.success(req,res,data,200)
+    }).catch(e => {
+        response.error(req,res,e,500)
+    })
+})
+
 
 /**
  * Funciones para agragar y eliminar cuentas de hijos

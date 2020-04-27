@@ -103,6 +103,22 @@ function editParent(idParent, data) {
     })
 }
 
+function deleteParent(id){
+    console.log('este es el id '+ id);
+    return new Promise((resolve,reject) => {
+        Model.findByIdAndRemove({_id: id}).exec((err,data) => {
+            console.log('esto es data en store :' + data);
+            if(err){
+                reject('Ocurrio error en la busqueda de padre')
+            }
+            if(data === '' || !data || data == null){
+                reject('No se encontro ningun padre para borrar')
+            }
+            resolve(data)
+        })
+    })
+}
+
 module.exports = {
     add: addParent,
     search,
@@ -111,5 +127,6 @@ module.exports = {
     validation: validationParenExist,
     addChild,
     getChildren: getChildrenByParent,
-    editParent
+    editParent,
+    delete: deleteParent,
 }

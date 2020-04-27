@@ -8,6 +8,11 @@ module.exports = function checkAuth(action){
                 auth.check.idAndRol(req, owner);
                 next()
                 break;
+            case 'deleteParent':
+                const idParent = req.params.id
+                auth.check.idAndRol(req,idParent);
+                next();
+                break;
             default:
                 next();
         }
