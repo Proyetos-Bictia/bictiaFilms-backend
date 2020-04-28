@@ -1,8 +1,9 @@
 const Model = require('./model')
 
 function agregarFavorito(id, body) {
+    console.log(id, body)
     return new Promise((resolve, reject) => {
-        Model.findOneAndUpdate({ _id: id }, { $push: { favFilm: body.favFilm } }, { new: true }).exec((err, data) => {
+        Model.findOneAndUpdate({ _id: id }, { $push: { favFilms: body.favFilm } }, { new: true }).exec((err, data) => {
             if (err) {
                 return reject('Ocurrio un error')
             }
@@ -18,8 +19,8 @@ function validarFilmFav(id, body) {
                 return reject('error al buscar el film en favoritos')
             }
 
-            if (data.favFilm){
-                data.favFilm.forEach(element => {
+            if (data.favFilms){
+                data.favFilms.forEach(element => {
                     if (element == body.favFilm){
                         return reject('esta cancion ya esta agregada en favoritos del usuario')
                     }
@@ -34,9 +35,23 @@ function validarFilmFav(id, body) {
 
 function deleteFavFilm(id, body) {
     return new Promise((resolve, reject) => {
-        Model.findOneAndDelete({_id: id}, {$pull: { favFilm: body.favFilm }}, {new: true}).exec((err, data) => {
+        Model.findOneAndUpdate({_id: id}, {$pull: { favFilms: {$in: body.favFilm} }}, {new: true}).exec((err, data) => {
             if (err){
                 return reject('Ocurrio un error')
+            }
+            return resolve(data)
+        })
+    })
+}
+
+function listChildByParent(id){
+    return new Promise((resolve,reject) => {
+        Model.find({parent: id}).exec((error, data) => {
+            if (error){
+                return reject('Ocurrio un error')
+            }
+            if (!data || data == '' || data == null){
+                return reject('No se encontro ninguna coincidencia')
             }
             return resolve(data)
         })
@@ -46,5 +61,6 @@ function deleteFavFilm(id, body) {
 module.exports = {
     agregarFavorito: agregarFavorito,
     validarFilmFav: validarFilmFav,
-    deleteFavFilm: deleteFavFilm
+    deleteFavFilm: deleteFavFilm,
+    listChildByParent: listChildByParent
 }

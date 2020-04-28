@@ -5,6 +5,14 @@ const controller = require('./controller')
 
 const router = express.Router();
 
+router.get('/listParent/:id',(req,res) => {
+    controller.listForParent(req.params.id).then(data => {
+        response.success(req, res, data, 200)
+    }).catch(e => {
+        response.error(req, res, e, 500)
+    })
+})
+
 router.patch('/addFavFilm/:id', (req, res) => {
     controller.addFavoriteFilm(req.params.id, req.body).then(data => {
         response.success(req, res, data, 200)

@@ -11,8 +11,7 @@ async function addFavoriteFilm(id, body){
 
     let validator = await store.validarFilmFav(id, body)
 
-    let edit = await store.addFavoriteFilm(id, body)
-    return edit
+    return store.agregarFavorito(id,body)
 }
 
 async function deleteFavFilm(id, body){
@@ -23,11 +22,21 @@ async function deleteFavFilm(id, body){
         return Promise.reject('Algun id no es valido')
     }
 
-    let edit = await store.deleteFavFilm(id, body)
-    return edit
+    return store.deleteFavFilm(id,body)
+}
+
+async function listChildForParent(id){
+    if(!id){
+        return Promise.reject('falta el id del padre')
+    }
+    if (mongoose.Types.ObjectId.isValid(id) !== true) {
+        return Promise.reject('id no valido para mongo')
+    }
+    return store.listChildByParent(id)
 }
 
 module.exports = {
     addFavoriteFilm,
-    deleteFavFilm
+    deleteFavFilm,
+    listForParent: listChildForParent
 }
