@@ -32,16 +32,12 @@ async function addParent(parent) {
 }
 
 async function editPass(id, data){
-    console.log('funcion edit pass')
     if (!id || !data){
-        console.log('1')
         return Promise.reject('faltan parametros')
     }
     if (mongoose.Types.ObjectId.isValid(id) !== true){
-        console.log('2')
         return Promise.reject('El id no es correcto')
     }
-    console.log('3 (afuera)')
     const fullMessage = {
         password: await bcrypt.hash(data.password, 5)
     }

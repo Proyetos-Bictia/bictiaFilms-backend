@@ -68,7 +68,6 @@ router.delete('/deleteChild/:id_parent/:id_child',(req,res) => {
 
 router.patch('/editPass/:id', (req, res) => {
     controller.editPass(req.params.id,req.body).then(data => {
-        console.log('entro a patch - editPass')
         response.success(req,res,data, 200)
     }).catch(e => {
         console.error('Error => ',e);

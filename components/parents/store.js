@@ -120,7 +120,6 @@ function deleteParent(id){
 }
 
 function updateDataParent(idParams, data) {
-    console.log('updateDataParent -----> ', idParams, ' ---- > ', data)
     return new Promise((resolve, reject) => {
         Model.findOneAndUpdate({ _id: idParams }, data, { new: true }, (error, user) => {
             if (error) {
