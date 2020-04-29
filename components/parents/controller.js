@@ -121,11 +121,11 @@ async function addChild(child) {
  * @param {*} idParent se recibe por body
  */
 
-async function deleteChild(idChild, idParent){
+async function deleteChild(idParent, idChild ){
     if(!idChild || !idParent){
         return Promise.reject('Id hijo, Id padre son obligatorios')
     }
-    if(!mongoose.Types.ObjectId.isValid(idChild) || !mongoose.Types.ObjectId.isValid(idParent)){
+    if(!mongoose.Types.ObjectId.isValid(idParent) || !mongoose.Types.ObjectId.isValid(idChild)){
         return Promise.reject('Este no es un id valido para la db')
     }
 

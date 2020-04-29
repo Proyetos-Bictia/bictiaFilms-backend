@@ -14,7 +14,7 @@ const check = {
         console.log('token decifrado ==>', decode);
 
         if(decode.rol !== 'ROL_ADMIN'){
-            throw new Error('No puedes hacer esto querido')
+            throw new Error('No puedes hacer esto querido -')
         }
     },
     
@@ -22,7 +22,7 @@ const check = {
         const decode = decodeHeader(req)
         console.log('token decifrado desde idandrol ===> ', decode);
         if(decode.rol !== 'ROL_PARENT' || decode.id !== owner){
-            throw new Error('No puedes hacer esto querido')
+            throw new Error('No puedes hacer esto querido *')
         }
     }
 }

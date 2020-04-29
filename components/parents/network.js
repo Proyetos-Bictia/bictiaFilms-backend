@@ -58,8 +58,8 @@ router.post('/createchild', secure('createChild'),(req,res) => {
     })
 })
 
-router.delete('/deleteChild',secure('createChild') ,(req,res) => {
-    controller.deleteChild(req.body.child, req.body.parent).then(data => {
+router.delete('/deleteChild/:id_parent/:id_child',(req,res) => {
+    controller.deleteChild(req.params.id_parent, req.params.id_child).then(data => {
         response.success(req,res,data,200)
     }).catch(e => {
         response.error(req,res,e,500)
