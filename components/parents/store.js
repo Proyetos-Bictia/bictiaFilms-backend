@@ -119,6 +119,21 @@ function deleteParent(id){
     })
 }
 
+function updateDataParent(idParams, data) {
+    console.log('updateDataParent -----> ', idParams, ' ---- > ', data)
+    return new Promise((resolve, reject) => {
+        Model.findOneAndUpdate({ _id: idParams }, data, { new: true }, (error, user) => {
+            if (error) {
+                console.log('error')
+                return reject('Ocurrio un error en la busqueda del usuario')
+            }else{
+                return (user)
+            }
+            
+        })
+    })
+}
+
 module.exports = {
     add: addParent,
     search,
@@ -129,4 +144,5 @@ module.exports = {
     getChildren: getChildrenByParent,
     editParent,
     delete: deleteParent,
+    updateDataParent
 }
