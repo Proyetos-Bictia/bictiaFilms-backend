@@ -60,7 +60,7 @@ function listChildByParent(id){
 
 function childById(id){
     return new Promise((resolve,reject) => {
-        Model.find({_id: id}).exec((err, user)=> {
+        Model.find({_id: id}).populate('favFilms').exec((err, user)=> {
             if(err){
                 return reject('Ocurrio un error en la busqqueda')
             }

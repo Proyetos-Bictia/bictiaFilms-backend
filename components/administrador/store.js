@@ -42,7 +42,27 @@ function emailParentExist(email){
     })
 }
 
+function getAdmins(id){
+    let filter = {}
+    if(id !== null){
+        filter = {_id: id}
+    }
+    console.log(filter)
+    return new Promise((resolve,reject) => {
+        Model.find(filter).exec((err, data) => {
+            if(err){
+                reject('Ocurrio un error en la busqueda')
+            }
+            if(data.length === 0){
+                reject('No hay ningun administrador por listar')
+            }
+            resolve(data)
+        })
+    })
+}
+
 module.exports = {
     add: addAdmin,
-    emailExist
+    emailExist,
+    getAdmins
 }

@@ -43,7 +43,12 @@ async function login(data){
     })
 }
 
+async function listarAdmin(id){
+    return store.getAdmins(id);
+}
+
 module.exports = {
     addAdmin,
-    login
+    login,
+    listarAdmin
 }

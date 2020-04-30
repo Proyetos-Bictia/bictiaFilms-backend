@@ -6,7 +6,11 @@ const secure = require('./secure')
 const router = express.Router()
 
 router.get('/', (req,res) => {
-    response.success(req,res,'estamos en get', 200)
+    controller.listarAdmin(req.query.id || null).then(admin => {
+        response.success(req,res,admin, 201)
+    }).catch(e => {
+        response.error(req,res,e,403)
+    })
 })
 
 router.post('/',secure('createAdmin'), (req,res) => {
