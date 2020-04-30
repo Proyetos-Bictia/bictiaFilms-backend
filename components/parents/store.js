@@ -126,7 +126,7 @@ function updateDataParent(idParams, data) {
                 console.log('error')
                 return reject('Ocurrio un error en la busqueda del usuario')
             }else{
-                return (user)
+                return resolve (user)
             }
             
         })
