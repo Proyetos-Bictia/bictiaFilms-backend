@@ -58,9 +58,24 @@ function listChildByParent(id){
     })
 }
 
+function childById(id){
+    return new Promise((resolve,reject) => {
+        Model.find({_id: id}).exec((err, user)=> {
+            if(err){
+                return reject('Ocurrio un error en la busqqueda')
+            }
+            if(user.length === 0){
+                return reject('No se encontraron coincidencias con el id')
+            }
+            return resolve(user)
+        })
+    })
+}
+
 module.exports = {
     agregarFavorito: agregarFavorito,
     validarFilmFav: validarFilmFav,
     deleteFavFilm: deleteFavFilm,
-    listChildByParent: listChildByParent
+    listChildByParent: listChildByParent,
+    childById: childById
 }

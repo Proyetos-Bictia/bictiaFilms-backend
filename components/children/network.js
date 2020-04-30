@@ -29,4 +29,12 @@ router.patch('/deleteFavFilm/:id', (req, res) => {
     })
 })
 
+router.get('/childbyid/:id', (req,res) => {
+    controller.childById(req.params.id).then(data => {
+        response.success(req,res,data, 200)
+    }).catch(e => {
+        response.error(req,res,e,501)
+    })
+})
+
 module.exports = router;

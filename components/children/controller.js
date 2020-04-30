@@ -35,8 +35,20 @@ async function listChildForParent(id){
     return store.listChildByParent(id)
 }
 
+async function childById(id){
+    if(!id){
+        return Promise.reject('fatlan parametros')
+    }
+    if(mongoose.Types.ObjectId.isValid(id) !== true){
+        return Promise.reject('El id no es valido')
+    }
+
+    return store.childById(id)
+}
+
 module.exports = {
     addFavoriteFilm,
     deleteFavFilm,
-    listForParent: listChildForParent
+    listForParent: listChildForParent,
+    childById
 }
